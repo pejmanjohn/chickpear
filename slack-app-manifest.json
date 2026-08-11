@@ -1,0 +1,76 @@
+{
+  "$schema": "https://raw.githubusercontent.com/slackapi/manifest-schema/main/manifest.schema.json",
+  "display_information": {
+    "name": "Chickpea",
+    "description": "A self-hosted, model-agnostic AI agent for Slack.",
+    "background_color": "#fffdf6"
+  },
+  "features": {
+    "app_home": {
+      "home_tab_enabled": false,
+      "messages_tab_enabled": true,
+      "messages_tab_read_only_enabled": false
+    },
+    "bot_user": {
+      "display_name": "Chickpea",
+      "always_online": true
+    },
+    "agent_view": {
+      "agent_description": "A self-hosted, model-agnostic AI agent for Slack.",
+      "suggested_prompts": [
+        {
+          "title": "Summarize supplied text",
+          "message": "Summarize the conversation or material I paste here."
+        },
+        {
+          "title": "Investigate a question",
+          "message": "Investigate this question using only material I supply or you are authorized to access:"
+        },
+        {
+          "title": "Plan a task",
+          "message": "Help me plan this task:"
+        }
+      ]
+    }
+  },
+  "oauth_config": {
+    "scopes": {
+      "bot": [
+        "app_mentions:read",
+        "assistant:write",
+        "channels:history",
+        "channels:join",
+        "channels:read",
+        "chat:write",
+        "files:write",
+        "groups:history",
+        "groups:read",
+        "im:history",
+        "reactions:read",
+        "reactions:write",
+        "users:read"
+      ]
+    }
+  },
+  "settings": {
+    "event_subscriptions": {
+      "request_url": "https://<YOUR_PUBLIC_HOST>/channels/slack/events",
+      "bot_events": [
+        "app_mention",
+        "app_context_changed",
+        "app_home_opened",
+        "member_joined_channel",
+        "message.channels",
+        "message.groups",
+        "message.im",
+        "reaction_added"
+      ]
+    },
+    "interactivity": {
+      "is_enabled": false
+    },
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": false,
+    "token_rotation_enabled": false
+  }
+}

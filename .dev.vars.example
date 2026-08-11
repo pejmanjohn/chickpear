@@ -1,0 +1,32 @@
+# Cloudflare Deploy prompts for every active key in this file, so consumer
+# deployment intentionally has none. The deploy wrapper creates Chickpea's
+# stable auth authority and its one-time setup handoff automatically.
+
+# Break-glass recovery is dormant by default. An account holder may create a
+# temporary value only when recovery is needed:
+# CHICKPEA_RECOVERY_TOKEN=""
+
+# Legacy shared Admin login for existing installations during migration only.
+# Fresh deployments must not enable it:
+# TAG_ADMIN_TOKEN=""
+
+# Non-secret defaults live in product code so Cloudflare does not expose them
+# as customer-editable Deploy fields. Advanced operators may still set the
+# documented runtime kill switches after deployment when needed.
+
+# Channel memory is always on for eligible assigned channels. There is no
+# memory feature flag or opt-out secret to configure.
+
+# Optional: add a catalog provider after deploy. Without one, the seeded Default
+# profile runs keyless on the Workers AI binding (@cf/zai-org/glm-5.2). These
+# deliberately remain comments: the Deploy to Cloudflare button renders every
+# active key in this file as a REQUIRED prompt, and provider keys must stay
+# optional. Set any provider you want after deploy instead:
+#   npx wrangler secret put ANTHROPIC_API_KEY
+#   npx wrangler secret put OPENAI_API_KEY
+#   npx wrangler secret put OPENROUTER_API_KEY
+# Optional plain vars can label those environment credentials without exposing
+# them and identify rotations: <PROVIDER>_CREDENTIAL_ALIAS and
+# <PROVIDER>_CREDENTIAL_EPOCH. CHICKPEA_DEPLOYMENT_EPOCH identifies a keyless
+# Workers AI binding deployment. Increment epochs when the underlying route is
+# rotated; omit them to report "rotation unknown" honestly.

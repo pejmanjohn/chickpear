@@ -1,0 +1,124 @@
+{
+  "name": "chickpear",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Self-hosted, model-agnostic AI agent for Slack.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pejmanjohn/chickpea.git"
+  },
+  "files": [
+    ".dev.vars.example",
+    ".env.example",
+    ".nvmrc",
+    "LICENSE",
+    "README.md",
+    "SETUP_AGENT.md",
+    "assets",
+    "catalog",
+    "docs/authentication.md",
+    "docs/runbooks/access-recovery.md",
+    "docs/runbooks/auth-db-upgrade.md",
+    "docs/runbooks/coding-sandbox-deployment.md",
+    "docs/runbooks/password-recovery.md",
+    "fixtures",
+    "migrations",
+    "scripts",
+    "src",
+    "tests",
+    "types",
+    "flue.config.ts",
+    "vite.config.ts",
+    "vite.node.config.ts",
+    "slack-app-manifest.json",
+    "tsconfig.json",
+    "wrangler.jsonc"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "overrides": {
+    "@flue/slack": {
+      "hono": "4.13.1"
+    }
+  },
+  "scripts": {
+    "test": "npm run typecheck && node --test --import tsx tests/*.test.ts tests/usage/*.test.ts",
+    "test:ci": "TAG_REQUIRE_LOOPBACK=1 npm test",
+    "typecheck": "tsc --noEmit",
+    "dev": "vite dev --config vite.node.config.ts",
+    "flue:build": "vite build --config vite.node.config.ts",
+    "flue:build:cf": "vite build --config vite.config.ts && node scripts/flue-build-cf.mjs --validate-only",
+    "build": "npm run flue:build:cf",
+    "build:sandbox": "node scripts/cloudflare-deployment-profile.mjs sandbox build",
+    "deploy": "node scripts/deploy-with-epilogue.mjs",
+    "deploy:sandbox": "node scripts/cloudflare-deployment-profile.mjs sandbox deploy",
+    "setup:link": "node scripts/create-setup-link.mjs",
+    "verify:cf-smoke": "node scripts/verify-cf-smoke.mjs",
+    "verify:run-foundation": "node scripts/verify-run-foundation.mjs",
+    "verify:admin-ui": "node scripts/verify-admin-ui.mjs",
+    "verify:durability": "node scripts/verify-durability.mjs",
+    "verify:conversation-scale": "node --import tsx scripts/verify-flue-conversation-scale.mjs",
+    "verify:providers": "node scripts/verify-providers.mjs",
+    "verify:providers:live": "node scripts/verify-providers-live.mjs",
+    "verify:openai-subscription-protocol": "node --import tsx scripts/verify-openai-subscription-protocol.mjs",
+    "verify:openai-subscription:live": "node scripts/verify-openai-subscription-live.mjs",
+    "verify:openai-subscription-runtime:live": "node --import tsx scripts/verify-openai-subscription-runtime-live.mjs",
+    "verify:openai-subscription-slack:live": "node scripts/verify-openai-subscription-slack-live.mjs",
+    "catalog:build": "node --import tsx scripts/build-model-catalog.mjs",
+    "catalog:reconcile": "node scripts/reconcile-model-catalog.mjs",
+    "verify:model-catalog": "node --import tsx scripts/verify-model-catalog.mjs",
+    "verify:model-catalog:served": "node scripts/check-model-catalog-freshness.mjs",
+    "verify:model-compatibility:live": "node --import tsx scripts/verify-model-compatibility-live.mjs",
+    "verify:oss-export": "node scripts/verify-oss-export.mjs",
+    "auth:recover": "node --import tsx scripts/recover-auth.mjs",
+    "auth:blocklist:build": "node scripts/generate-common-passwords.mjs",
+    "slack:bridge": "node scripts/slack-socket-bridge.mjs",
+    "reset:test-env": "node scripts/reset-test-env.mjs"
+  },
+  "dependencies": {
+    "@cfworker/json-schema": "4.1.1",
+    "@cloudflare/sandbox": "0.12.4",
+    "@earendil-works/pi-ai": "0.83.0",
+    "@flue/runtime": "2.0.0",
+    "@flue/slack": "2.0.0",
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "@slack/web-api": "^8.0.0",
+    "agents": "^0.20.1",
+    "better-auth": "1.6.26",
+    "croner": "10.0.1",
+    "hono": "^4.13.1",
+    "jose": "6.2.8",
+    "just-bash": "3.0.2",
+    "valibot": "^1.4.2"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.51.1",
+    "@cloudflare/workers-types": "5.20260801.1",
+    "@flue/cli": "2.0.0",
+    "@flue/vite": "2.0.0",
+    "@slack/socket-mode": "^2.0.7",
+    "@slack/types": "3.0.0",
+    "@types/node": "26.0.0",
+    "@zxcvbn-ts/language-common": "4.1.3",
+    "tsx": "^4.22.4",
+    "typescript": "6.0.3",
+    "vite": "^8.1.2",
+    "wrangler": "4.120.0"
+  },
+  "cloudflare": {
+    "label": "Chickpea",
+    "products": [
+      "Workers",
+      "Durable Objects",
+      "D1",
+      "Workers AI"
+    ],
+    "categories": [
+      "ai"
+    ],
+    "bindings": {}
+  }
+}
